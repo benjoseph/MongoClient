@@ -1,12 +1,12 @@
 package com.ben.mongoclient;
 
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-
-
+/* This class is used to read from properties file, which is used 
+ * to determine the type of database use. ConfigManager is a singleton class.
+ */
 
 public class ConfigManager {
 		
@@ -14,6 +14,8 @@ public class ConfigManager {
 	private static ConfigManager singleton;
 	CRUD db=null;
 	
+	// To create singleton
+
 	public static ConfigManager get() {
 		if(singleton==null){
 		   singleton=new ConfigManager();
@@ -22,6 +24,7 @@ public class ConfigManager {
 		
 	}
 	
+	//Create a connection to database
 	public CRUD connection(){
 		String dbname=getDB();
 		
@@ -30,7 +33,7 @@ public class ConfigManager {
 		return db;
 	}
 	
-	
+	//Load config file
 	public void getConfigFile(){
 		InputStream fin = ClassLoader.getSystemClassLoader().getResourceAsStream("config.properties");
 		try{
@@ -42,7 +45,7 @@ public class ConfigManager {
 	}
 
 	
-	
+	//Read config file after loading
 	public String getDB(){
 		getConfigFile();
 		String db=null;

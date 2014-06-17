@@ -2,6 +2,10 @@ package com.ben.mongoclient;
 
 import com.sun.istack.internal.logging.Logger;
 
+/* Read 10,1000 records by searching for consecutive UDID and 
+ * prints the time taken to complete the read process.
+ */
+
 
 public class ReadPerfTest {
 	
@@ -22,7 +26,7 @@ public class ReadPerfTest {
 		log.info("Starting read test");
 		for(int i=1010000;i<1020000;i++){
 			
-		     	 UDID = Integer.toString(i);
+		       UDID = Integer.toString(i);
 			   db.read(UDID);
 //			   d.display();
 		}
