@@ -10,23 +10,28 @@ import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 
-
 /*Implements the Mongo specific Connection and CRUD operations.
  * Selects the database 'awdb' and collection 'mycollection'
+ * 
+ * Mongo client from the driver is used to create an instance of the connection.
+ * This is used select a database and that is stored in object of type DB
+ * DB is used in selecting a collection from that database. 
+ * The selected collection is used to perform the CRUD operations.
  */
 
 public class MongoCRUD implements CRUD {
 
 	DBCollection collection;
 
-	public boolean createconn(){
-		try{
+	public boolean createconn() {
+		try {
 			DB db;
 			MongoClient mongo;
-			mongo = new MongoClient( "localhost" , 27017 );
-			db=mongo.getDB("awdb");
+			mongo = new MongoClient("localhost", 27017);
+			db = mongo.getDB("awdb");
+			
 			collection = db.getCollectionFromString("mycollection");
-		}catch(UnknownHostException e) {
+		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (MongoException e) {
 			e.printStackTrace();
@@ -35,11 +40,12 @@ public class MongoCRUD implements CRUD {
 			return true;
 		else
 			return false;
+		
 	}
 
 	public boolean create(Device d) {
 		BasicDBObject document = new BasicDBObject();
-		document.put("UDID",d.getUdid());
+		document.put("UDID", d.getUdid());
 		document.put("name", d.getFriendlyName());
 		document.put("Serial", d.getSerialNumber());
 		document.put("Manf", d.getManfDate());
@@ -52,12 +58,12 @@ public class MongoCRUD implements CRUD {
 		BasicDBObject searchQuery = new BasicDBObject();
 		searchQuery.put("UDID", UDID);
 		cursor = collection.find(searchQuery);
-		Device d=new Device();
+		Device d = new Device();
 		while (cursor.hasNext()) {
-			DBObject buff=cursor.next();
+			DBObject buff = cursor.next();
 			d.setUdid(UDID);
-			d.setFriendlyName((String) buff.get( "name" ));
-			d.setManfDate((String) buff.get( "Manf" ));
+			d.setFriendlyName((String) buff.get("name"));
+			d.setManfDate((String) buff.get("Manf"));
 		}
 		return d;
 	}
@@ -66,19 +72,20 @@ public class MongoCRUD implements CRUD {
 		BasicDBObject searchQuery = new BasicDBObject();
 		searchQuery.put("UDID", UDID);
 		collection.remove(searchQuery);
-		return true;	
+		return true;
 	}
 
 	public boolean update(Device d) {
 		BasicDBObject searchQuery = new BasicDBObject();
 		BasicDBObject document = new BasicDBObject();
 		searchQuery = new BasicDBObject().append("UDID", d.getUdid());
-		document.append("$set", new BasicDBObject().append("name", d.getFriendlyName()).append("Serial",d.getSerialNumber()).append("Manf",d.getManfDate()));			        			    	     
+		document.append(
+				"$set",
+				new BasicDBObject().append("name", d.getFriendlyName())
+						.append("Serial", d.getSerialNumber())
+						.append("Manf", d.getManfDate()));
 		collection.update(searchQuery, document);
 		return true;
 	}
-
-
-
 
 }

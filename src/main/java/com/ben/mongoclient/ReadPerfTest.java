@@ -13,9 +13,9 @@ public class ReadPerfTest {
 	
 	public void runtest(){
 		
-		
+		//to obtain an instance of collection which can be used to perform crud
 		ConfigManager config=ConfigManager.get();
-		CRUD db=config.connection();
+		CRUD db=config.selectdbtype();
 		db.createconn();
 	
 		

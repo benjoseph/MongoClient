@@ -21,12 +21,9 @@ import com.google.gson.Gson;
 
 public class GenTestData {
 
-	public void generate(){
-
-
+	public void generate() {
 
 		try {
-
 
 			File file = new File("/Users/AirWatch/test.txt");
 			// if file doesnt exists, then create it
@@ -35,40 +32,29 @@ public class GenTestData {
 			}
 
 			FileWriter fw = new FileWriter(file.getAbsoluteFile());
-			BufferedWriter bw = new BufferedWriter(fw);	
+			BufferedWriter bw = new BufferedWriter(fw);
 
-			for(int i=0;i<1000000;i++){
-
-
-
-				Gson g=new Gson();
-				Device d=new Device();
-				d.setUdid(Integer.toString(1000000+i));
-				d.setFriendlyName(UUID.randomUUID().toString().replaceAll("-", ""));
-				d.setSerialNumber(Integer.toString(Math.abs(UUID.randomUUID().toString().replaceAll("-", "").hashCode())));
+			for (int i = 0; i < 1000000; i++) {
+				Gson g = new Gson();
+				Device d = new Device();
+				d.setUdid(Integer.toString(1000000 + i));
+				d.setFriendlyName(UUID.randomUUID().toString()
+						.replaceAll("-", ""));
+				d.setSerialNumber(Integer.toString(Math.abs(UUID.randomUUID()
+						.toString().replaceAll("-", "").hashCode())));
 				Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				Date date=new Date();
+				Date date = new Date();
 				d.setManfDate(formatter.format(date));
-				String content = g.toJson(d); 
+				String content = g.toJson(d);
 
 				bw.write(content);
 				bw.newLine();
-
-
-
-
-
-
 			}
 			System.out.println("Done");
 			bw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-
-
-
 
 	}
 

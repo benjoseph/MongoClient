@@ -34,7 +34,7 @@ public class CLOps {
 		}else	{
 
 			ConfigManager config=ConfigManager.get();
-			CRUD db=config.connection();
+			CRUD db=config.selectdbtype();
 			db.createconn();
 			int crudchoice;
 			Device d=new Device();
@@ -54,7 +54,6 @@ public class CLOps {
 				d.setSerialNumber(s.next());
 				System.out.println("Enter Manf Date");
 				d.setManfDate(s.next());
-
 				db.create(d);
 				break;
 

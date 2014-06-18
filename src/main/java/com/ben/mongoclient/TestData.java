@@ -16,7 +16,7 @@ public class TestData {
 		try (BufferedReader br = new BufferedReader(new FileReader("C:\\test.txt")))
 		{
 			ConfigManager conf=ConfigManager.get();
-			CRUD m=conf.connection();
+			CRUD m=conf.selectdbtype();
 			m.createconn();
 
 			Gson g=new Gson();
